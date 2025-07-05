@@ -109,6 +109,156 @@ const AINewsDashboard = () => {
       url: "https://trendforce.com/baidu-huawei-opensource-ai/",
       publishedAt: "2025-06-29T10:15:00Z",
       image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjBGOUZGIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij7nmb7luqbjgrvljjrlnIg8L3RleHQ+Cjwvc3ZnPg=="
+    },
+    {
+      id: 11,
+      title: "OpenAI、300億ドル評価で400億ドル資金調達を完了",
+      summary: "SoftBank主導でThrive Capital、Microsoft、Coatueが参加。過去最大規模のAIスタートアップ投資",
+      category: "business",
+      source: "TechCrunch",
+      url: "https://techcrunch.com/openai-funding-40b/",
+      publishedAt: "2025-06-28T14:45:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRUZGNkZGIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5PcGVuQUkgRnVuZGluZzwvdGV4dD4KPC9zdmc+"
+    },
+    {
+      id: 12,
+      title: "Anthropic、615億ドル評価でSeries E 35億ドル調達",
+      summary: "Lightspeed主導でSalesforce Ventures、Menlo Ventures、General Catalystが参加",
+      category: "business",
+      source: "Crunchbase",
+      url: "https://crunchbase.com/anthropic-series-e/",
+      publishedAt: "2025-06-27T11:20:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkZGOUZBIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5BbnRocm9waWMgRnVuZGluZzwvdGV4dD4KPC9zdmc+"
+    },
+    {
+      id: 13,
+      title: "Berkeley、生物学最大のAIモデル「Evo 2」を発表",
+      summary: "10万種以上のDNAデータで訓練。遺伝子設計と疾患変異の特定が可能な革新的AIモデル",
+      category: "tech",
+      source: "Berkeley Engineering",
+      url: "https://engineering.berkeley.edu/evo-2-ai-breakthrough/",
+      publishedAt: "2025-06-26T16:30:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjBGOUZGIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5CZXJrZWxleSBFdm8gMjwvdGV4dD4KPC9zdmc+"
+    },
+    {
+      id: 14,
+      title: "EU AI法、2025年2月から段階的施行開始",
+      summary: "世界初の包括的AI規制法。高リスクAIシステムへの厳格な規制と罰則を導入",
+      category: "japan",
+      source: "European Parliament",
+      url: "https://europarl.europa.eu/ai-act-2025/",
+      publishedAt: "2025-06-25T13:15:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkVGMkY0Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5FVSBBSSBBY3Q8L3RleHQ+Cjwvc3ZnPg=="
+    },
+    {
+      id: 15,
+      title: "トランプ大統領、AI規制を大幅緩和する大統領令に署名",
+      summary: "「米国のAIリーダーシップへの障壁除去」を目的とした新政策。バイデン政権のAI規制を撤廃",
+      category: "japan",
+      source: "CNBC",
+      url: "https://cnbc.com/trump-ai-executive-order-2025/",
+      publishedAt: "2025-06-24T10:45:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkNGREZFIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5UcnVtcCBBSSBQb2xpY3k8L3RleHQ+Cjwvc3ZnPg=="
+    },
+    {
+      id: 16,
+      title: "SandboxAQ、57億ドル評価でSeries E 4.5億ドル調達",
+      summary: "NVIDIA、Google、ブリッジウォーターのレイ・ダリオなどが投資。量子AI企業として注目",
+      category: "business",
+      source: "Bloomberg",
+      url: "https://bloomberg.com/sandboxaq-funding-2025/",
+      publishedAt: "2025-06-23T15:20:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkZGOUZBIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5TYW5kYm94QVEgRnVuZGluZzwvdGV4dD4KPC9zdmc+"
+    },
+    {
+      id: 17,
+      title: "Thinking Machines Lab、100億ドル評価でSeries B 20億ドル",
+      summary: "元OpenAI CTOミラ・ムラティが設立。マルチステップ推論と自己改善システムに特化",
+      category: "business",
+      source: "TechCrunch",
+      url: "https://techcrunch.com/thinking-machines-lab-funding/",
+      publishedAt: "2025-06-22T12:30:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjBGREY0Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5UaGlua2luZyBNYWNoaW5lczwvdGV4dD4KPC9zdmc+"
+    },
+    {
+      id: 18,
+      title: "Stanford AI Index 2025：産業界がAIモデル開発を主導",
+      summary: "2024年の注目AIモデルの90%が産業界発。学術界は引き続き引用数上位の研究を生産",
+      category: "tech",
+      source: "Stanford HAI",
+      url: "https://hai.stanford.edu/ai-index-2025/",
+      publishedAt: "2025-06-21T09:15:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkFFRkZGIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5TdGFuZm9yZCBBSSBJbmRleDwvdGV4dD4KPC9zdmc+"
+    },
+    {
+      id: 19,
+      title: "TensorWave、Series A 1億ドル調達でAI推論インフラ強化",
+      summary: "Magnetar Capital・AMD Ventures共同主導。AI推論とデプロイメントプラットフォーム拡大",
+      category: "business",
+      source: "VentureBeat",
+      url: "https://venturebeat.com/tensorwave-series-a/",
+      publishedAt: "2025-06-20T14:00:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi0vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGOUZBIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5UZW5zb3JXYXZlIEZ1bmRpbmc8L3RleHQ+Cjwvc3ZnPg=="
+    },
+    {
+      id: 20,
+      title: "中国、AI法草案を発表。高リスクシステムへ厳格規制",
+      summary: "2024年5月に学者が提案した「中華人民共和国人工知能法」草案。開発者・展開者に法的要求",
+      category: "japan",
+      source: "Reuters",
+      url: "https://reuters.com/china-ai-law-draft-2025/",
+      publishedAt: "2025-06-19T11:45:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkVGMkY0Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij7kuK3lm73jgqjjgqTms5Xmoag8L3RleHQ+Cjwvc3ZnPg=="
+    },
+    {
+      id: 21,
+      title: "Baseten、Series C 7500万ドルでAI推論プラットフォーム拡大",
+      summary: "企業向けAIモデルデプロイメント時間短縮と技術的オーバーヘッド削減を実現",
+      category: "business",
+      source: "Crunchbase",
+      url: "https://crunchbase.com/baseten-series-c/",
+      publishedAt: "2025-06-18T16:20:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkZGOUZBIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5CYXNldGVuIEZ1bmRpbmc8L3RleHQ+Cjwvc3ZnPg=="
+    },
+    {
+      id: 22,
+      title: "Rice大学とGoogle、AI venture accelerator発足",
+      summary: "産学連携でAIスタートアップ支援。学術研究の実用化加速を目指す",
+      category: "tech",
+      source: "Rice University",
+      url: "https://rice.edu/google-ai-accelerator-2025/",
+      publishedAt: "2025-06-17T13:30:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkVGNkUzIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5SaWNlICYgR29vZ2xlPC90ZXh0Pgo8L3N2Zz4="
+    },
+    {
+      id: 23,
+      title: "Andreessen Horowitz、15億ドルのAI専門ファンド設立",
+      summary: "a16zがAI特化の大型ファンドを発表。機械学習スタートアップへの投資を急速拡大",
+      category: "business",
+      source: "TechCrunch",
+      url: "https://techcrunch.com/a16z-ai-fund-1.5b/",
+      publishedAt: "2025-06-16T10:15:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjBGOUZGIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5hMTZ6IEFJIEZ1bmQ8L3RleHQ+Cjwvc3ZnPg=="
+    },
+    {
+      id: 24,
+      title: "Georgia Tech、AI acceleratorプログラム開始",
+      summary: "学術研究の実用化に特化したAIアクセラレータープログラムを3月に正式発足",
+      category: "tech",
+      source: "Georgia Tech News",
+      url: "https://news.gatech.edu/ai-accelerator-2025/",
+      publishedAt: "2025-06-15T15:45:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkNGREZFIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5HZW9yZ2lhIFRlY2g8L3RleHQ+Cjwvc3ZnPg=="
+    },
+    {
+      id: 25,
+      title: "SAM 2発表：動画内オブジェクト追跡の革新技術",
+      summary: "2025年の画期的AI論文。コンピューターが動画内でオブジェクトを追跡・識別する新技術",
+      category: "generative",
+      source: "Meta AI Research",
+      url: "https://ai.meta.com/sam-2-video-tracking/",
+      publishedAt: "2025-06-14T12:00:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjBGREY0Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5TQU0gMiBWaWRlbzwvdGV4dD4KPC9zdmc+"
     }
   ];
 
