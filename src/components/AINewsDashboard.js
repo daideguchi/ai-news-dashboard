@@ -11,6 +11,7 @@ const AINewsDashboard = () => {
   const [translating, setTranslating] = useState(false);
   const [translationCache, setTranslationCache] = useState({});
   const [showSummary, setShowSummary] = useState(false);
+  const [summarizing, setSummarizing] = useState(false);
 
   // 最新のAIニュースデータ（2025年7月5日更新）
   const demoNews = [
@@ -537,7 +538,35 @@ const AINewsDashboard = () => {
             {/* 言語切り替えと要約表示ボタン */}
             <div className="flex items-center gap-3">
               <button
-                onClick={() => setShowSummary(!showSummary)}
+                onClick={async () => {
+                  if (!showSummary) {
+                    // 要約表示をオンにする時、まだ要約がない記事に対して要約を生成
+                    setSummarizing(true);
+                    const needsSummary = news.filter(item => !item.aiSummary);
+                    
+                    if (needsSummary.length > 0) {
+                      const updatedNews = await Promise.all(
+                        news.map(async (item) => {
+                          if (item.aiSummary) {
+                            return item; // 既に要約があるものはそのまま
+                          }
+                          
+                          const result = await translateAndSummarize(item, language === 'en' ? 'summarize' : 'translate-and-summarize');
+                          
+                          return {
+                            ...item,
+                            aiSummary: result.summary,
+                            translationMethod: result.method,
+                            contentType: result.contentType
+                          };
+                        })
+                      );
+                      setNews(updatedNews);
+                    }
+                    setSummarizing(false);
+                  }
+                  setShowSummary(!showSummary);
+                }}
                 className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                   showSummary
                     ? 'bg-green-100 text-green-700 hover:bg-green-200'
@@ -545,11 +574,15 @@ const AINewsDashboard = () => {
                 }`}
               >
                 <Bot size={20} />
-                {language === 'en' ? (showSummary ? 'Hide Summary' : 'Show Summary') : (showSummary ? '要約を隠す' : '要約を表示')}
+                {summarizing ? (
+                  language === 'en' ? 'Generating...' : '要約生成中...'
+                ) : (
+                  language === 'en' ? (showSummary ? 'Hide Summary' : 'Show Summary') : (showSummary ? '要約を隠す' : '要約を表示')
+                )}
               </button>
               <button
                 onClick={toggleLanguage}
-                disabled={translating}
+                disabled={translating || summarizing}
                 className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Languages size={20} />
@@ -578,7 +611,7 @@ const AINewsDashboard = () => {
             </div>
             <button
               onClick={fetchNews}
-              disabled={loading || translating}
+              disabled={loading || translating || summarizing}
               className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               <RefreshCw className={loading ? 'animate-spin' : ''} size={20} />
@@ -735,12 +768,15 @@ const AINewsDashboard = () => {
           </div>
         )}
 
-        {translating && (
+        {(translating || summarizing) && (
           <div className="text-center py-12">
             <div className="flex items-center justify-center gap-3">
               <RefreshCw className="animate-spin" size={20} />
               <p className="text-gray-500 text-lg">
-                {language === 'en' ? 'Translating articles...' : '記事を翻訳中...'}
+                {translating 
+                  ? (language === 'en' ? 'Translating articles...' : '記事を翻訳中...')
+                  : (language === 'en' ? 'Generating summaries...' : '要約を生成中...')
+                }
               </p>
             </div>
           </div>

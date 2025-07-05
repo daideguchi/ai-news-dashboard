@@ -84,12 +84,19 @@ export default async function handler(request, response) {
         };
       }
     } else if (action === 'summarize') {
-      prompt = `以下の英語のニュース記事を日本語で要約してください。要点を3つのポイントに整理し、簡潔にまとめてください。
+      const isLongContent = text.length > 500;
+      
+      prompt = `以下の英語のニュース記事${isLongContent ? '（全文）' : ''}の要約を作成してください。
 
 タイトル: ${title || 'なし'}
 内容: ${text}
 
-要約のみを出力してください。`;
+${isLongContent ? 
+        `記事の重要なポイントを3-5点に整理し、具体的な内容を含めて要約してください。` :
+        `要点を3つのポイントに整理して簡潔にまとめてください。`
+      }
+
+要約のみを日本語で出力してください。`;
 
       try {
         const apiKey = process.env.GEMINI_API_KEY;
