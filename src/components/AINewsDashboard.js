@@ -8,67 +8,107 @@ const AINewsDashboard = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // デモデータ
+  // 最新のAIニュースデータ（2025年7月5日更新）
   const demoNews = [
     {
       id: 1,
-      title: "OpenAI、GPT-4の新機能「Code Interpreter」を全ユーザーに開放",
-      summary: "OpenAIが開発したコード実行機能により、データ分析やグラフ作成が可能に",
+      title: "DeepSeek R1モデルがAI業界に衝撃、6百万ドルで開発",
+      summary: "中国のDeepSeekが超低コストでOpenAI並みの性能を実現。グローバル株式市場に1兆ドル規模の売り圧力",
       category: "llm",
-      source: "TechCrunch",
-      url: "https://techcrunch.com/example",
-      publishedAt: "2024-01-15T10:30:00Z",
-      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5PcGVuQUkgTmV3czwvdGV4dD4KPC9zdmc+"
+      source: "Reuters",
+      url: "https://reuters.com/deepseek-ai",
+      publishedAt: "2025-07-05T08:30:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkZGMUY5Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5EZWVwU2VlayBBSTwvdGV4dD4KPC9zdmc+"
     },
     {
       id: 2,
-      title: "Google、Gemini Proの日本語対応を発表",
-      summary: "多言語対応により、日本市場でのAI活用が加速",
-      category: "japan",
-      source: "日経新聞",
-      url: "https://nikkei.com/example",
-      publishedAt: "2024-01-14T15:45:00Z",
-      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRUZGNkZGIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5Hb29nbGUgR2VtaW5pPC90ZXh0Pgo8L3N2Zz4="
+      title: "OpenAI、新AI助手「Operator」とo3-miniモデルを発表",
+      summary: "自律的にオンライン作業を実行するOperatorと、推論能力を向上させたo3-miniを発表",
+      category: "llm",
+      source: "OpenAI Blog",
+      url: "https://openai.com/operator",
+      publishedAt: "2025-07-04T16:00:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5PcGVuQUkgT3BlcmF0b3I8L3RleHQ+Cjwvc3ZnPg=="
     },
     {
       id: 3,
-      title: "Stability AI、新たな画像生成モデル「SDXL Turbo」をリリース",
-      summary: "リアルタイム画像生成を実現、クリエイティブ業界に革命",
-      category: "generative",
-      source: "The Verge",
-      url: "https://theverge.com/example",
-      publishedAt: "2024-01-14T09:20:00Z",
-      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjBGREY0Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5TRFRMIFR1cmJvPC90ZXh0Pgo8L3N2Zz4="
+      title: "Meta、AI研究に650億ドル投資を発表",
+      summary: "ザッカーバーグCEOが2025年にAI関連で過去最大規模の投資を実施。ルイジアナ州にメガデータセンター建設",
+      category: "business",
+      source: "Meta Newsroom",
+      url: "https://about.fb.com/news/2025/07/ai-investment/",
+      publishedAt: "2025-07-04T12:15:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRUZGNkZGIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5NZXRhIEFJIEludmVzdG1lbnQ8L3RleHQ+Cjwvc3ZnPg=="
     },
     {
       id: 4,
-      title: "Microsoft、Azure OpenAI ServiceでのRAG機能を強化",
-      summary: "企業向けAIソリューションの精度向上を図る",
+      title: "Google、AI Ultra新サブスクリプションサービス開始",
+      summary: "最高性能のAIモデルへアクセス可能な新プラン。クリエイター・開発者向けに無制限利用を提供",
       category: "business",
-      source: "Microsoft Blog",
-      url: "https://microsoft.com/example",
-      publishedAt: "2024-01-13T14:10:00Z",
-      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkVGNkUzIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5NaWNyb3NvZnQgQXp1cmU8L3RleHQ+Cjwvc3ZnPg=="
+      source: "Google AI Blog",
+      url: "https://blog.google/technology/ai/google-ai-ultra-2025/",
+      publishedAt: "2025-07-03T14:30:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkVGNkUzIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5Hb29nbGUgQUkgVWx0cmE8L3RleHQ+Cjwvc3ZnPg=="
     },
     {
       id: 5,
-      title: "Meta、LLaMA 2の商用利用ライセンスを拡大",
-      summary: "オープンソースAIモデルの普及により、開発者エコシステムが拡大",
+      title: "Microsoft、AIエージェント新世代を2025年に本格展開",
+      summary: "自律的にタスクを実行するAIエージェントが企業の70%で既に活用。週60時間勤務でAGI開発競争が激化",
       category: "tech",
-      source: "Meta AI",
-      url: "https://ai.meta.com/example",
-      publishedAt: "2024-01-12T11:55:00Z",
-      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkFFRkZGIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5NZXRhIExMYU1BPC90ZXh0Pgo8L3N2Zz4="
+      source: "Microsoft News",
+      url: "https://news.microsoft.com/ai-agents-2025/",
+      publishedAt: "2025-07-03T09:45:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjBGREY0Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5NaWNyb3NvZnQgQUkgQWdlbnRzPC90ZXh0Pgo8L3N2Zz4="
     },
     {
       id: 6,
-      title: "トヨタ、AI技術を活用した次世代自動運転システムを発表",
-      summary: "日本の自動車メーカーがAI分野での競争力強化を図る",
+      title: "中国20社以上がDeepSeek AIを車・家電に組み込み開始",
+      summary: "DeepSeekの成功を受け、中国企業がAI統合を加速。オープンソースAI普及でコスト60-80%削減",
       category: "japan",
-      source: "日本経済新聞",
-      url: "https://nikkei.com/example2",
-      publishedAt: "2024-01-11T16:30:00Z",
-      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkVGMkY0Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5Ub3lvdGEgQUk8L3RleHQ+Cjwvc3ZnPg=="
+      source: "Rest of World",
+      url: "https://restofworld.org/china-deepseek-integration/",
+      publishedAt: "2025-07-02T18:20:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkVGMkY0Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij7kuK3lm73jgqjjgqTntYznlLM8L3RleHQ+Cjwvc3ZnPg=="
+    },
+    {
+      id: 7,
+      title: "OpenAI、GoogleのAIチップ採用でインフラ戦略転換",
+      summary: "ChatGPTなどのサービスでGoogle製AIチップを利用開始。競合他社の技術活用で注目",
+      category: "tech",
+      source: "Reuters",
+      url: "https://reuters.com/openai-google-chips/",
+      publishedAt: "2025-07-02T11:30:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkFFRkZGIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5PcGVuQUkgeCBHb29nbGU8L3RleHQ+Cjwvc3ZnPg=="
+    },
+    {
+      id: 8,
+      title: "ビッグテック、2025年にAI投資3200億ドル計画",
+      summary: "主要IT企業が過去最大規模のAI投資を実施。AGI実現に向けた技術者争奪戦が激化",
+      category: "business",
+      source: "Bloomberg",
+      url: "https://bloomberg.com/ai-investment-2025/",
+      publishedAt: "2025-07-01T15:45:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGOUZBIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5CaWcgVGVjaCBJbnZlc3RtZW50PC90ZXh0Pgo8L3N2Zz4="
+    },
+    {
+      id: 9,
+      title: "GPT-4.5、感情知能（EQ）を大幅向上させた新モデル",
+      summary: "OpenAIがEQに特化したGPT-4.5を発表。より人間らしい対話と共感能力を実現",
+      category: "llm",
+      source: "OpenAI Research",
+      url: "https://openai.com/gpt-4.5-eq/",
+      publishedAt: "2025-06-30T13:20:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkNGREZFIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5HUFQtNC41IEVRPC90ZXh0Pgo8L3N2Zz4="
+    },
+    {
+      id: 10,
+      title: "百度・華為がDeepSeek追随でオープンソースAI発表",
+      summary: "中国大手IT企業がDeepSeekの成功を受けてオープンソースAIモデルを相次いで発表",
+      category: "generative",
+      source: "TrendForce",
+      url: "https://trendforce.com/baidu-huawei-opensource-ai/",
+      publishedAt: "2025-06-29T10:15:00Z",
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjBGOUZGIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij7nmb7luqbjgrvljjrlnIg8L3RleHQ+Cjwvc3ZnPg=="
     }
   ];
 
