@@ -57,3 +57,4 @@ jspm_packages/
 
 # OS
 Thumbs.db
+.vercel
