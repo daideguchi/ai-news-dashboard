@@ -287,84 +287,61 @@ const AINewsDashboard = () => {
   const fetchNews = async () => {
     setLoading(true);
     try {
-      // 複数のソースからAI関連ニュースを取得
-      const queries = [
-        'artificial intelligence OR AI OR machine learning OR "deep learning" OR ChatGPT OR OpenAI',
-        'generative AI OR LLM OR "large language model" OR GPT OR Claude',
-        'AI startup OR "AI funding" OR "artificial intelligence investment"'
-      ];
+      // RSS フィードアグリゲーターAPIを呼び出し
+      const response = await fetch('/api/news');
 
-      const sources = [
-        'techcrunch.com,venturebeat.com,theverge.com,wired.com',
-        'reuters.com,bloomberg.com,cnbc.com',
-        'engadget.com,arstechnica.com,thenextweb.com'
-      ];
+      if (response.ok) {
+        const data = await response.json();
+        
+        if (data.articles && data.articles.length > 0) {
+          // カテゴリ分類
+          const categorizedNews = data.articles.map((article, index) => {
+            let category = 'tech';
+            const title = article.title.toLowerCase();
+            const description = (article.description || '').toLowerCase();
+            const content = title + ' ' + description;
 
-      let allArticles = [];
-
-      // 複数のクエリとソースで並列取得
-      for (let i = 0; i < queries.length; i++) {
-        try {
-          // Vercel API Proxyを使用（CORS回避のため）
-          const response = await fetch(
-            `/api/news?query=${encodeURIComponent(queries[i])}&domains=${sources[i % sources.length]}`
-          );
-
-          if (response.ok) {
-            const data = await response.json();
-            if (data.articles) {
-              allArticles = [...allArticles, ...data.articles];
+            if (content.includes('openai') || content.includes('gpt') || content.includes('chatgpt') || 
+                content.includes('claude') || content.includes('llm') || content.includes('large language')) {
+              category = 'llm';
+            } else if (content.includes('funding') || content.includes('investment') || content.includes('billion') || 
+                       content.includes('startup') || content.includes('venture') || content.includes('raised') ||
+                       content.includes('series') || content.includes('valuation')) {
+              category = 'business';
+            } else if (content.includes('generated') || content.includes('image') || content.includes('video') ||
+                       content.includes('creative') || content.includes('art') || content.includes('design') ||
+                       content.includes('dall-e') || content.includes('midjourney')) {
+              category = 'generative';
+            } else if (content.includes('japan') || content.includes('japanese') || content.includes('tokyo') ||
+                       content.includes('sony') || content.includes('toyota') || content.includes('softbank')) {
+              category = 'japan';
             }
+
+            return {
+              id: index + 1,
+              title: article.title,
+              summary: article.description || 'No description available',
+              category: category,
+              source: article.source.name,
+              url: article.url,
+              publishedAt: article.publishedAt,
+              image: article.urlToImage || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5BSSBOZXdzPC90ZXh0Pgo8L3N2Zz4="
+            };
+          });
+
+          setNews(categorizedNews);
+          
+          // フォールバックかどうかを表示
+          if (data.fallback) {
+            console.warn('Using fallback demo data due to RSS feed issues');
           }
-        } catch (error) {
-          console.warn(`Query ${i} failed:`, error);
+        } else {
+          // API レスポンスが空の場合、デモデータを使用
+          setNews(demoNews);
         }
-      }
-
-      // 重複を除去し、最新順にソート
-      const uniqueArticles = allArticles
-        .filter((article, index, self) => 
-          index === self.findIndex(a => a.url === article.url)
-        )
-        .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
-        .slice(0, 25);
-
-      // カテゴリ分類
-      const categorizedNews = uniqueArticles.map((article, index) => {
-        let category = 'tech';
-        const title = article.title.toLowerCase();
-        const description = (article.description || '').toLowerCase();
-        const content = title + ' ' + description;
-
-        if (content.includes('openai') || content.includes('gpt') || content.includes('chatgpt') || 
-            content.includes('claude') || content.includes('llm') || content.includes('large language')) {
-          category = 'llm';
-        } else if (content.includes('funding') || content.includes('investment') || content.includes('billion') || 
-                   content.includes('startup') || content.includes('venture')) {
-          category = 'business';
-        } else if (content.includes('generated') || content.includes('image') || content.includes('video') ||
-                   content.includes('creative') || content.includes('art')) {
-          category = 'generative';
-        } else if (content.includes('japan') || content.includes('japanese') || content.includes('tokyo')) {
-          category = 'japan';
-        }
-
-        return {
-          id: index + 1,
-          title: article.title,
-          summary: article.description || 'No description available',
-          category: category,
-          source: article.source.name,
-          url: article.url,
-          publishedAt: article.publishedAt,
-          image: article.urlToImage || "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5BSSBOZXdzPC90ZXh0Pgo8L3N2Zz4="
-        };
-      });
-
-      if (categorizedNews.length > 0) {
-        setNews(categorizedNews);
       } else {
-        // フォールバック: デモデータを使用
+        // API エラーの場合、デモデータを使用
+        console.warn('API request failed, using demo data');
         setNews(demoNews);
       }
       
