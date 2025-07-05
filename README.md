@@ -7,13 +7,15 @@
 - **カテゴリー別表示**: LLM、生成AI、技術、ビジネス、日本のニュースを分類
 - **リアルタイム検索**: キーワードでニュースを絞り込み
 - **ワンクリック更新**: 最新ニュースを簡単に取得
+- **AI翻訳・要約**: Gemini CLIによる高精度な日本語翻訳と要約
 - **多言語対応**: 英語・日本語の切り替え＆自動翻訳
 - **レスポンシブデザイン**: PC・スマホ・タブレットに対応
-- **直感的なUI**: 読みやすいカードレイアウト
+- **直感的なUI**: 視覚的にわかりやすいカードレイアウト
 
 ## 🛠️ 技術スタック
 
 - **React 18**: フロントエンドフレームワーク
+- **Gemini CLI**: AI翻訳・要約エンジン（Google製）
 - **Lucide React**: 美しいアイコン
 - **Tailwind CSS**: スタイリング（組み込み）
 - **Create React App**: 開発環境
@@ -37,17 +39,19 @@ npm run build
 
 ## 🔑 API設定
 
-リアルタイムニュース取得のため、NewsAPIキーが必要です：
+AI翻訳・要約機能のため、Gemini APIキーを推奨：
 
-1. [NewsAPI](https://newsapi.org/)で無料アカウントを作成
-2. APIキーを取得
+1. [Google AI Studio](https://aistudio.google.com/app/apikey)で無料アカウントを作成
+2. APIキーを取得（無料枠: 1日1,000リクエスト）
 3. `.env`ファイルに以下を追加：
 ```bash
-NEWS_API_KEY=your_actual_api_key_here
+GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 **Vercelデプロイ時**：
-- Vercel ダッシュボードの Environment Variables に `NEWS_API_KEY` を設定
+- Vercel ダッシュボードの Environment Variables に `GEMINI_API_KEY` を設定
+
+**注意**: APIキーが設定されていない場合、シンプルな辞書ベース翻訳を使用
 
 ## 🔧 開発
 

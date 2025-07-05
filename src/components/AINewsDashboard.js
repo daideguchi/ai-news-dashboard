@@ -10,6 +10,7 @@ const AINewsDashboard = () => {
   const [language, setLanguage] = useState('en'); // 'en' or 'jp'
   const [translating, setTranslating] = useState(false);
   const [translationCache, setTranslationCache] = useState({});
+  const [showSummary, setShowSummary] = useState(false);
 
   // 最新のAIニュースデータ（2025年7月5日更新）
   const demoNews = [
@@ -318,42 +319,52 @@ const AINewsDashboard = () => {
     }
   };
 
-  const translateText = async (text, targetLang = 'ja') => {
+  const translateAndSummarize = async (text, title, action = 'translate-and-summarize') => {
     // キャッシュチェック
-    const cacheKey = `${text}-${targetLang}`;
+    const cacheKey = `${text}-${title}-${action}`;
     if (translationCache[cacheKey]) {
       return translationCache[cacheKey];
     }
 
     try {
-      const response = await fetch('/api/translate', {
+      const response = await fetch('/api/gemini-translate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           text: text,
-          targetLang: targetLang
+          title: title,
+          targetLang: 'ja',
+          action: action
         })
       });
 
       if (response.ok) {
         const data = await response.json();
-        const translatedText = data.translatedText || text;
+        const result = {
+          translatedText: data.translatedText || text,
+          summary: data.summary || text.substring(0, 100) + '...',
+          method: data.method || 'unknown'
+        };
         
         // キャッシュに保存
         setTranslationCache(prev => ({
           ...prev,
-          [cacheKey]: translatedText
+          [cacheKey]: result
         }));
         
-        return translatedText;
+        return result;
       }
     } catch (error) {
       console.warn('Translation failed:', error);
     }
     
-    return text; // フォールバック
+    return {
+      translatedText: text,
+      summary: text.substring(0, 100) + '...',
+      method: 'error'
+    };
   };
 
   const toggleLanguage = async () => {
@@ -361,18 +372,19 @@ const AINewsDashboard = () => {
       setTranslating(true);
       setLanguage('jp');
       
-      // ニュースを翻訳
+      // ニュースを翻訳&要約
       const translatedNews = await Promise.all(
         news.map(async (item) => {
-          const translatedTitle = await translateText(item.title);
-          const translatedSummary = await translateText(item.summary);
+          const result = await translateAndSummarize(item.summary, item.title, 'translate-and-summarize');
           
           return {
             ...item,
             originalTitle: item.title,
             originalSummary: item.summary,
-            title: translatedTitle,
-            summary: translatedSummary
+            title: result.translatedText ? result.translatedText.split('\n')[0] : item.title,
+            summary: result.translatedText || item.summary,
+            aiSummary: result.summary || item.summary,
+            translationMethod: result.method
           };
         })
       );
@@ -493,19 +505,32 @@ const AINewsDashboard = () => {
               </p>
             </div>
             
-            {/* 言語切り替えボタン */}
-            <button
-              onClick={toggleLanguage}
-              disabled={translating}
-              className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <Languages size={20} />
-              {translating ? (
-                language === 'en' ? 'Translating...' : '翻訳中...'
-              ) : (
-                language === 'en' ? '日本語' : 'English'
-              )}
-            </button>
+            {/* 言語切り替えと要約表示ボタン */}
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setShowSummary(!showSummary)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                  showSummary
+                    ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                <Bot size={20} />
+                {language === 'en' ? (showSummary ? 'Hide Summary' : 'Show Summary') : (showSummary ? '要約を隠す' : '要約を表示')}
+              </button>
+              <button
+                onClick={toggleLanguage}
+                disabled={translating}
+                className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <Languages size={20} />
+                {translating ? (
+                  language === 'en' ? 'Translating...' : '翻訳中...'
+                ) : (
+                  language === 'en' ? '日本語' : 'English'
+                )}
+              </button>
+            </div>
           </div>
         </div>
 
@@ -573,23 +598,42 @@ const AINewsDashboard = () => {
               key={item.id}
               className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
             >
-              <div className="aspect-video bg-gray-200 relative">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute top-3 right-3">
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                    item.category === 'llm' ? 'bg-purple-100 text-purple-800' :
-                    item.category === 'generative' ? 'bg-green-100 text-green-800' :
-                    item.category === 'tech' ? 'bg-blue-100 text-blue-800' :
-                    item.category === 'business' ? 'bg-orange-100 text-orange-800' :
-                    item.category === 'japan' ? 'bg-red-100 text-red-800' :
-                    'bg-gray-100 text-gray-800'
-                  }`}>
-                    {categories.find(c => c.id === item.category)?.name || 'その他'}
-                  </span>
+              <div className="relative h-48 bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+                {item.image && !item.image.includes('data:image/svg+xml') ? (
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover rounded-t-xl"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'flex';
+                    }}
+                  />
+                ) : null}
+                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+                  <div className="text-center">
+                    <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-3 ${
+                      item.category === 'llm' ? 'bg-purple-100 text-purple-600' :
+                      item.category === 'generative' ? 'bg-green-100 text-green-600' :
+                      item.category === 'tech' ? 'bg-blue-100 text-blue-600' :
+                      item.category === 'business' ? 'bg-orange-100 text-orange-600' :
+                      item.category === 'japan' ? 'bg-red-100 text-red-600' :
+                      'bg-gray-100 text-gray-600'
+                    }`}>
+                      {categories.find(c => c.id === item.category)?.icon && 
+                        React.createElement(categories.find(c => c.id === item.category).icon, { size: 24 })}
+                    </div>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                      item.category === 'llm' ? 'bg-purple-100 text-purple-800' :
+                      item.category === 'generative' ? 'bg-green-100 text-green-800' :
+                      item.category === 'tech' ? 'bg-blue-100 text-blue-800' :
+                      item.category === 'business' ? 'bg-orange-100 text-orange-800' :
+                      item.category === 'japan' ? 'bg-red-100 text-red-800' :
+                      'bg-gray-100 text-gray-800'
+                    }`}>
+                      {categories.find(c => c.id === item.category)?.name || 'その他'}
+                    </span>
+                  </div>
                 </div>
               </div>
               
@@ -604,9 +648,29 @@ const AINewsDashboard = () => {
                   {item.title}
                 </h3>
                 
-                <p className="text-gray-600 mb-4 line-clamp-3">
-                  {item.summary}
-                </p>
+                <div className="mb-4">
+                  <p className="text-gray-600 mb-2 line-clamp-3">
+                    {item.summary}
+                  </p>
+                  {showSummary && item.aiSummary && item.aiSummary !== item.summary && (
+                    <div className="mt-3 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-300">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Bot size={16} className="text-blue-600" />
+                        <span className="text-sm font-medium text-blue-700">
+                          {language === 'en' ? 'AI Summary' : 'AI要約'}
+                        </span>
+                        {item.translationMethod && (
+                          <span className="text-xs text-blue-500 bg-blue-100 px-2 py-1 rounded">
+                            {item.translationMethod}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-blue-800 leading-relaxed">
+                        {item.aiSummary}
+                      </p>
+                    </div>
+                  )}
+                </div>
                 
                 <a
                   href={item.url}
