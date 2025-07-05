@@ -16,13 +16,84 @@ export default async function handler(request, response) {
   }
 
   try {
-    // RSS Feed sources for AI news
+    // RSS Feed sources for AI news - Comprehensive AI-focused sources
     const rssFeeds = [
+      // 主要テック系AI専門フィード
       'https://techcrunch.com/category/artificial-intelligence/feed/',
       'https://venturebeat.com/ai/feed/',
       'https://www.theverge.com/ai-artificial-intelligence/rss/index.xml',
       'https://feeds.ycombinator.com/news.rss',
-      'https://rss.cnn.com/rss/edition.rss'
+      
+      // AI研究・学術系
+      'https://arxiv.org/rss/cs.AI',
+      'https://arxiv.org/rss/cs.LG', 
+      'https://arxiv.org/rss/cs.CL',
+      'https://arxiv.org/rss/cs.CV',
+      'https://www.ai-mag.com/feed/',
+      'https://distill.pub/rss.xml',
+      
+      // 企業・ビジネス系AI
+      'https://openai.com/blog/rss.xml',
+      'https://blog.google/technology/ai/rss',
+      'https://blogs.microsoft.com/ai/feed/',
+      'https://aws.amazon.com/blogs/machine-learning/feed/',
+      'https://engineering.fb.com/feed/',
+      'https://developer.nvidia.com/blog/feed',
+      'https://blog.research.google/feeds/posts/default',
+      
+      // AI業界ニュース・分析
+      'https://www.artificialintelligence-news.com/feed/',
+      'https://syncedreview.com/feed/',
+      'https://www.unite.ai/feed/',
+      'https://hai.stanford.edu/news/rss.xml',
+      'https://www.deeplearning.ai/the-batch/rss/',
+      'https://www.marktechpost.com/feed/',
+      'https://analyticsindiamag.com/feed/',
+      'https://www.kdnuggets.com/feed',
+      
+      // ML/DL専門
+      'https://machinelearningmastery.com/feed/',
+      'https://towardsdatascience.com/feed',
+      'https://blog.paperspace.com/rss/',
+      'https://www.fast.ai/feed.xml',
+      'https://neptune.ai/blog/rss.xml',
+      'https://wandb.ai/fully-connected/rss.xml',
+      
+      // スタートアップ・投資系
+      'https://news.crunchbase.com/feed/',
+      'https://pitchbook.com/news/rss',
+      'https://www.cbinsights.com/feed',
+      
+      // 一般テック（AIコンテンツフィルタリング後）
+      'https://feeds.arstechnica.com/arstechnica/index',
+      'https://www.wired.com/feed/rss',
+      'https://feeds.feedburner.com/oreilly/radar',
+      'https://rss.cnn.com/rss/edition_technology.rss',
+      'https://feeds.reuters.com/reuters/technologyNews',
+      'https://feeds.bbci.co.uk/news/technology/rss.xml',
+      
+      // 日本のAI情報源
+      'https://ledge.ai/feed/',
+      'https://ainow.ai/feed/',
+      'https://www.itmedia.co.jp/news/subtop/aiplus/index.rdf',
+      
+      // GitHub・開発者系
+      'https://github.blog/feed/',
+      'https://huggingface.co/blog/feed.xml',
+      
+      // AI倫理・政策
+      'https://www.partnershiponai.org/feed/',
+      'https://futureoflife.org/feed/',
+      
+      // 新興AI企業
+      'https://blog.anthropic.com/rss',
+      'https://stability.ai/blog/rss',
+      'https://cohere.com/blog/rss.xml',
+      
+      // AI関連ポッドキャスト・メディア
+      'https://lexfridman.com/feed/podcast/',
+      'https://www.twimlai.com/feed/podcast/',
+      'https://changelog.com/practicalai/feed'
     ];
 
     let allArticles = [];
@@ -68,21 +139,48 @@ export default async function handler(request, response) {
       }
     }
 
-    // Filter for AI-related content
+    // Enhanced AI-related content filtering with comprehensive keywords
     const aiArticles = allArticles.filter(article => {
       const content = (article.title + ' ' + (article.description || '')).toLowerCase();
-      return content.includes('ai') || 
-             content.includes('artificial intelligence') || 
-             content.includes('machine learning') ||
-             content.includes('neural network') ||
-             content.includes('deep learning') ||
-             content.includes('openai') ||
-             content.includes('chatgpt') ||
-             content.includes('claude') ||
-             content.includes('llm') ||
-             content.includes('gpt') ||
-             content.includes('generative') ||
-             content.includes('algorithm');
+      const aiKeywords = [
+        // Core AI terms
+        'ai', 'artificial intelligence', 'machine learning', 'ml', 'deep learning', 'dl',
+        'neural network', 'neural networks', 'algorithm', 'algorithms',
+        
+        // Popular AI models/companies
+        'openai', 'chatgpt', 'gpt', 'claude', 'anthropic', 'gemini', 'bard',
+        'llm', 'large language model', 'generative', 'transformer',
+        'bert', 'roberta', 'gpt-4', 'gpt-3', 'dall-e', 'midjourney',
+        
+        // AI techniques/concepts
+        'computer vision', 'natural language processing', 'nlp', 'reinforcement learning',
+        'supervised learning', 'unsupervised learning', 'diffusion', 'autoregressive',
+        'attention mechanism', 'backpropagation', 'gradient descent',
+        
+        // AI applications
+        'chatbot', 'voice assistant', 'image generation', 'text generation',
+        'automation', 'autonomous', 'robotics', 'recommendation system',
+        'facial recognition', 'speech recognition', 'translation',
+        
+        // AI hardware/infrastructure
+        'gpu', 'nvidia', 'tensor', 'cuda', 'tpu', 'edge computing',
+        'quantum computing', 'neuromorphic',
+        
+        // AI companies/platforms
+        'hugging face', 'stability ai', 'cohere', 'ai21', 'databricks',
+        'scale ai', 'weights & biases', 'wandb', 'mlflow',
+        
+        // AI ethics/safety
+        'ai safety', 'ai alignment', 'bias', 'fairness', 'explainable ai',
+        'xai', 'responsible ai', 'ai governance',
+        
+        // Emerging AI terms
+        'multimodal', 'foundation model', 'prompt engineering', 'few-shot',
+        'zero-shot', 'in-context learning', 'emergent behavior',
+        'artificial general intelligence', 'agi', 'superintelligence'
+      ];
+      
+      return aiKeywords.some(keyword => content.includes(keyword));
     });
 
     // Remove duplicates and sort by date
@@ -91,7 +189,7 @@ export default async function handler(request, response) {
         index === self.findIndex(a => a.url === article.url)
       )
       .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
-      .slice(0, 25);
+      .slice(0, 50); // More articles with expanded sources
 
     return response.status(200).json({
       status: 'ok',

@@ -736,9 +736,28 @@ const AINewsDashboard = () => {
                           </span>
                         )}
                       </div>
-                      <p className="text-sm text-blue-800 leading-relaxed">
-                        {item.aiSummary}
-                      </p>
+                      <div className="text-sm text-blue-800 leading-relaxed">
+                        {item.aiSummary.includes('•') || item.aiSummary.includes('・') ? (
+                          // 箱条書き形式の場合
+                          <ul className="space-y-2 ml-4">
+                            {item.aiSummary.split(/\n/).filter(line => line.trim().includes('•') || line.trim().includes('・')).map((point, idx) => (
+                              <li key={idx} className="flex items-start">
+                                <span className="text-blue-600 mr-2 mt-1">•</span>
+                                <span>{point.replace(/[•・]/g, '').trim()}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          // 通常の文章形式の場合
+                          <div className="space-y-2">
+                            {item.aiSummary.split(/[\n。．]+/).filter(s => s.trim().length > 10).map((sentence, idx) => (
+                              <p key={idx} className="mb-2">
+                                {sentence.trim().endsWith('。') || sentence.trim().endsWith('．') ? sentence.trim() : sentence.trim() + '。'}
+                              </p>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   )}
                 </div>
