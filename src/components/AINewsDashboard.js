@@ -18,7 +18,7 @@ const AINewsDashboard = () => {
       source: "TechCrunch",
       url: "https://techcrunch.com/example",
       publishedAt: "2024-01-15T10:30:00Z",
-      image: "https://via.placeholder.com/300x200?text=OpenAI+News"
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjNGNEY2Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5PcGVuQUkgTmV3czwvdGV4dD4KPC9zdmc+"
     },
     {
       id: 2,
@@ -28,7 +28,7 @@ const AINewsDashboard = () => {
       source: "日経新聞",
       url: "https://nikkei.com/example",
       publishedAt: "2024-01-14T15:45:00Z",
-      image: "https://via.placeholder.com/300x200?text=Google+Gemini"
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRUZGNkZGIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5Hb29nbGUgR2VtaW5pPC90ZXh0Pgo8L3N2Zz4="
     },
     {
       id: 3,
@@ -38,7 +38,7 @@ const AINewsDashboard = () => {
       source: "The Verge",
       url: "https://theverge.com/example",
       publishedAt: "2024-01-14T09:20:00Z",
-      image: "https://via.placeholder.com/300x200?text=SDXL+Turbo"
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRjBGREY0Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5TRFRMIFR1cmJvPC90ZXh0Pgo8L3N2Zz4="
     },
     {
       id: 4,
@@ -48,7 +48,7 @@ const AINewsDashboard = () => {
       source: "Microsoft Blog",
       url: "https://microsoft.com/example",
       publishedAt: "2024-01-13T14:10:00Z",
-      image: "https://via.placeholder.com/300x200?text=Microsoft+Azure"
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkVGNkUzIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5NaWNyb3NvZnQgQXp1cmU8L3RleHQ+Cjwvc3ZnPg=="
     },
     {
       id: 5,
@@ -58,7 +58,7 @@ const AINewsDashboard = () => {
       source: "Meta AI",
       url: "https://ai.meta.com/example",
       publishedAt: "2024-01-12T11:55:00Z",
-      image: "https://via.placeholder.com/300x200?text=Meta+LLaMA"
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkFFRkZGIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5NZXRhIExMYU1BPC90ZXh0Pgo8L3N2Zz4="
     },
     {
       id: 6,
@@ -68,7 +68,7 @@ const AINewsDashboard = () => {
       source: "日本経済新聞",
       url: "https://nikkei.com/example2",
       publishedAt: "2024-01-11T16:30:00Z",
-      image: "https://via.placeholder.com/300x200?text=Toyota+AI"
+      image: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRkVGMkY0Ii8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkb21pbmFudC1iYXNlbGluZT0iY2VudHJhbCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE2IiBmaWxsPSIjNjU3Mzg2Ij5Ub3lvdGEgQUk8L3RleHQ+Cjwvc3ZnPg=="
     }
   ];
 
