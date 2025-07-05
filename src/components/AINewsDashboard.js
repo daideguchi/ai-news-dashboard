@@ -319,22 +319,48 @@ const AINewsDashboard = () => {
     }
   };
 
-  const translateAndSummarize = async (text, title, action = 'translate-and-summarize') => {
+  const fetchArticleContent = async (url) => {
+    try {
+      const response = await fetch('/api/fetch-article', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url: url })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        return data.success ? data.content : null;
+      }
+    } catch (error) {
+      console.warn('Article fetch failed:', error);
+    }
+    return null;
+  };
+
+  const translateAndSummarize = async (item, action = 'translate-and-summarize') => {
     // キャッシュチェック
-    const cacheKey = `${text}-${title}-${action}`;
+    const cacheKey = `${item.url}-${action}`;
     if (translationCache[cacheKey]) {
       return translationCache[cacheKey];
     }
 
     try {
+      // まず記事の本文を取得しようとする
+      const fullContent = await fetchArticleContent(item.url);
+      const textToProcess = fullContent || item.summary || item.title;
+      
+      console.log('Processing content length:', textToProcess.length, 'chars');
+      
       const response = await fetch('/api/gemini-translate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          text: text,
-          title: title,
+          text: textToProcess,
+          title: item.title,
           targetLang: 'ja',
           action: action
         })
@@ -343,9 +369,10 @@ const AINewsDashboard = () => {
       if (response.ok) {
         const data = await response.json();
         const result = {
-          translatedText: data.translatedText || text,
-          summary: data.summary || text.substring(0, 100) + '...',
-          method: data.method || 'unknown'
+          translatedText: data.translatedText || item.summary,
+          summary: data.summary || textToProcess.substring(0, 100) + '...',
+          method: data.method || 'unknown',
+          contentType: fullContent ? 'full-article' : 'description-only'
         };
         
         // キャッシュに保存
@@ -361,9 +388,10 @@ const AINewsDashboard = () => {
     }
     
     return {
-      translatedText: text,
-      summary: text.substring(0, 100) + '...',
-      method: 'error'
+      translatedText: item.summary,
+      summary: item.summary.substring(0, 100) + '...',
+      method: 'error',
+      contentType: 'fallback'
     };
   };
 
@@ -372,10 +400,10 @@ const AINewsDashboard = () => {
       setTranslating(true);
       setLanguage('jp');
       
-      // ニュースを翻訳&要約
+      // ニュースを翻訳&要約（本文取得して從来より高精度な要約）
       const translatedNews = await Promise.all(
         news.map(async (item) => {
-          const result = await translateAndSummarize(item.summary, item.title, 'translate-and-summarize');
+          const result = await translateAndSummarize(item, 'translate-and-summarize');
           
           return {
             ...item,
@@ -384,7 +412,8 @@ const AINewsDashboard = () => {
             title: result.translatedText ? result.translatedText.split('\n')[0] : item.title,
             summary: result.translatedText || item.summary,
             aiSummary: result.summary || item.summary,
-            translationMethod: result.method
+            translationMethod: result.method,
+            contentType: result.contentType
           };
         })
       );
@@ -660,8 +689,17 @@ const AINewsDashboard = () => {
                           {language === 'en' ? 'AI Summary' : 'AI要約'}
                         </span>
                         {item.translationMethod && (
-                          <span className="text-xs text-blue-500 bg-blue-100 px-2 py-1 rounded">
+                          <span className="text-xs text-blue-500 bg-blue-100 px-2 py-1 rounded mr-2">
                             {item.translationMethod}
+                          </span>
+                        )}
+                        {item.contentType && (
+                          <span className={`text-xs px-2 py-1 rounded ${
+                            item.contentType === 'full-article' 
+                              ? 'text-green-600 bg-green-100' 
+                              : 'text-orange-600 bg-orange-100'
+                          }`}>
+                            {item.contentType === 'full-article' ? '全文要約' : '概要のみ'}
                           </span>
                         )}
                       </div>

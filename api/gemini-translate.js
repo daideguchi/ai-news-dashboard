@@ -134,13 +134,19 @@ export default async function handler(request, response) {
         };
       }
     } else if (action === 'translate-and-summarize') {
-      prompt = `以下の英語のニュース記事を日本語に翻訳し、さらに要約してください。
+      const isLongContent = text.length > 500;
+      
+      prompt = `以下の英語のニュース記事${isLongContent ? '（全文）' : ''}を日本語に翻訳し、さらに要約してください。
 
 タイトル: ${title || 'なし'}
 内容: ${text}
 
-1. 翻訳: 自然で読みやすい日本語に翻訳
-2. 要約: 要点を3つのポイントに整理して簡潔にまとめる
+${isLongContent ? 
+  `1. 翻訳: 記事全体を自然で読みやすい日本語に翻訳（重要な情報を漏らさず）
+2. 要約: 記事の重要なポイントを3-5点に整理し、具体的な内容を含めて要約` :
+  `1. 翻訳: 自然で読みやすい日本語に翻訳
+2. 要約: 要点を3つのポイントに整理して簡潔にまとめる`
+}
 
 以下の形式で出力してください：
 翻訳: [翻訳された内容]
