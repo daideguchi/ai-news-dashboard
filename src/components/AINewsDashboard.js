@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, RefreshCw, Calendar, ExternalLink, Bot, Zap, Building2, Globe, MapPin } from 'lucide-react';
+import { Search, RefreshCw, Calendar, ExternalLink, Bot, Zap, Building2, Globe, MapPin, Languages } from 'lucide-react';
 
 const AINewsDashboard = () => {
   const [news, setNews] = useState([]);
@@ -7,6 +7,9 @@ const AINewsDashboard = () => {
   const [lastUpdated, setLastUpdated] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [language, setLanguage] = useState('en'); // 'en' or 'jp'
+  const [translating, setTranslating] = useState(false);
+  const [translationCache, setTranslationCache] = useState({});
 
   // 最新のAIニュースデータ（2025年7月5日更新）
   const demoNews = [
@@ -263,12 +266,36 @@ const AINewsDashboard = () => {
   ];
 
   const categories = [
-    { id: 'all', name: 'すべて', icon: Globe },
-    { id: 'llm', name: 'LLM', icon: Bot },
-    { id: 'generative', name: '生成AI', icon: Zap },
-    { id: 'tech', name: '技術', icon: Bot },
-    { id: 'business', name: 'ビジネス', icon: Building2 },
-    { id: 'japan', name: '日本', icon: MapPin }
+    { 
+      id: 'all', 
+      name: language === 'en' ? 'All' : 'すべて', 
+      icon: Globe 
+    },
+    { 
+      id: 'llm', 
+      name: 'LLM', 
+      icon: Bot 
+    },
+    { 
+      id: 'generative', 
+      name: language === 'en' ? 'Generative AI' : '生成AI', 
+      icon: Zap 
+    },
+    { 
+      id: 'tech', 
+      name: language === 'en' ? 'Technology' : '技術', 
+      icon: Bot 
+    },
+    { 
+      id: 'business', 
+      name: language === 'en' ? 'Business' : 'ビジネス', 
+      icon: Building2 
+    },
+    { 
+      id: 'japan', 
+      name: language === 'en' ? 'Japan' : '日本', 
+      icon: MapPin 
+    }
   ];
 
   const formatDate = (dateString) => {
@@ -276,12 +303,92 @@ const AINewsDashboard = () => {
     const now = new Date();
     const diffInHours = Math.floor((now - date) / (1000 * 60 * 60));
     
-    if (diffInHours < 1) return '今すぐ';
-    if (diffInHours < 24) return `${diffInHours}時間前`;
-    if (diffInHours < 48) return '昨日';
+    if (language === 'en') {
+      if (diffInHours < 1) return 'now';
+      if (diffInHours < 24) return `${diffInHours}h ago`;
+      if (diffInHours < 48) return 'yesterday';
+      const diffInDays = Math.floor(diffInHours / 24);
+      return `${diffInDays}d ago`;
+    } else {
+      if (diffInHours < 1) return '今すぐ';
+      if (diffInHours < 24) return `${diffInHours}時間前`;
+      if (diffInHours < 48) return '昨日';
+      const diffInDays = Math.floor(diffInHours / 24);
+      return `${diffInDays}日前`;
+    }
+  };
+
+  const translateText = async (text, targetLang = 'ja') => {
+    // キャッシュチェック
+    const cacheKey = `${text}-${targetLang}`;
+    if (translationCache[cacheKey]) {
+      return translationCache[cacheKey];
+    }
+
+    try {
+      const response = await fetch('/api/translate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: text,
+          targetLang: targetLang
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const translatedText = data.translatedText || text;
+        
+        // キャッシュに保存
+        setTranslationCache(prev => ({
+          ...prev,
+          [cacheKey]: translatedText
+        }));
+        
+        return translatedText;
+      }
+    } catch (error) {
+      console.warn('Translation failed:', error);
+    }
     
-    const diffInDays = Math.floor(diffInHours / 24);
-    return `${diffInDays}日前`;
+    return text; // フォールバック
+  };
+
+  const toggleLanguage = async () => {
+    if (language === 'en') {
+      setTranslating(true);
+      setLanguage('jp');
+      
+      // ニュースを翻訳
+      const translatedNews = await Promise.all(
+        news.map(async (item) => {
+          const translatedTitle = await translateText(item.title);
+          const translatedSummary = await translateText(item.summary);
+          
+          return {
+            ...item,
+            originalTitle: item.title,
+            originalSummary: item.summary,
+            title: translatedTitle,
+            summary: translatedSummary
+          };
+        })
+      );
+      
+      setNews(translatedNews);
+      setTranslating(false);
+    } else {
+      setLanguage('en');
+      // 元のテキストに戻す
+      const originalNews = news.map(item => ({
+        ...item,
+        title: item.originalTitle || item.title,
+        summary: item.originalSummary || item.summary
+      }));
+      setNews(originalNews);
+    }
   };
 
   const fetchNews = async () => {
@@ -372,11 +479,34 @@ const AINewsDashboard = () => {
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* ヘッダー */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4 flex items-center gap-3">
-            <Bot className="text-blue-600" size={40} />
-            AIニュースダッシュボード
-          </h1>
-          <p className="text-gray-600 text-lg">最新のAI技術動向を毎日チェック</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-4xl font-bold text-gray-800 mb-4 flex items-center gap-3">
+                <Bot className="text-blue-600" size={40} />
+                {language === 'en' ? 'AI News Dashboard' : 'AIニュースダッシュボード'}
+              </h1>
+              <p className="text-gray-600 text-lg">
+                {language === 'en' 
+                  ? 'Stay updated with the latest AI developments' 
+                  : '最新のAI技術動向を毎日チェック'
+                }
+              </p>
+            </div>
+            
+            {/* 言語切り替えボタン */}
+            <button
+              onClick={toggleLanguage}
+              disabled={translating}
+              className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Languages size={20} />
+              {translating ? (
+                language === 'en' ? 'Translating...' : '翻訳中...'
+              ) : (
+                language === 'en' ? '日本語' : 'English'
+              )}
+            </button>
+          </div>
         </div>
 
         {/* 検索とフィルター */}
@@ -386,7 +516,7 @@ const AINewsDashboard = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
               <input
                 type="text"
-                placeholder="ニュースを検索..."
+                placeholder={language === 'en' ? 'Search news...' : 'ニュースを検索...'}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -394,11 +524,14 @@ const AINewsDashboard = () => {
             </div>
             <button
               onClick={fetchNews}
-              disabled={loading}
+              disabled={loading || translating}
               className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               <RefreshCw className={loading ? 'animate-spin' : ''} size={20} />
-              {loading ? '更新中...' : '更新'}
+              {loading ? 
+                (language === 'en' ? 'Updating...' : '更新中...') : 
+                (language === 'en' ? 'Update' : '更新')
+              }
             </button>
           </div>
 
@@ -428,7 +561,8 @@ const AINewsDashboard = () => {
         {lastUpdated && (
           <div className="mb-6 flex items-center gap-2 text-sm text-gray-500">
             <Calendar size={16} />
-            最終更新: {lastUpdated.toLocaleString('ja-JP')}
+            {language === 'en' ? 'Last updated: ' : '最終更新: '}
+            {lastUpdated.toLocaleString(language === 'en' ? 'en-US' : 'ja-JP')}
           </div>
         )}
 
@@ -480,7 +614,7 @@ const AINewsDashboard = () => {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium transition-colors"
                 >
-                  続きを読む
+                  {language === 'en' ? 'Read more' : '続きを読む'}
                   <ExternalLink size={16} />
                 </a>
               </div>
@@ -488,9 +622,25 @@ const AINewsDashboard = () => {
           ))}
         </div>
 
-        {filteredNews.length === 0 && !loading && (
+        {filteredNews.length === 0 && !loading && !translating && (
           <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">該当するニュースが見つかりませんでした。</p>
+            <p className="text-gray-500 text-lg">
+              {language === 'en' 
+                ? 'No news found matching your criteria.' 
+                : '該当するニュースが見つかりませんでした。'
+              }
+            </p>
+          </div>
+        )}
+
+        {translating && (
+          <div className="text-center py-12">
+            <div className="flex items-center justify-center gap-3">
+              <RefreshCw className="animate-spin" size={20} />
+              <p className="text-gray-500 text-lg">
+                {language === 'en' ? 'Translating articles...' : '記事を翻訳中...'}
+              </p>
+            </div>
           </div>
         )}
       </div>
